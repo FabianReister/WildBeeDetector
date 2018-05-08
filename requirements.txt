@@ -1,0 +1,9 @@
+numpy
+opencv-python==3.4.*
+matplotlib
+
+# test dependencies
+#unittest2
+os
+sys
+
