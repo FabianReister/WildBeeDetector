@@ -27,6 +27,8 @@ setup(
     url='https://github.com/FabianReister/WildBeeWatch',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
+    scripts=['scripts/run_on_video'],
+    data_files=[('config', ['config/config.yaml'])],
     test_suite='setup.test_suite'
 )
 
