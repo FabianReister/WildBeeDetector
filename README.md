@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a weekend project to detect wild bees on my balcony.
+This is a weekend project to detect wild bees (solitary bees) on my balcony.
 
 ![Bee](tests/data/single_bee.jpg)
 
