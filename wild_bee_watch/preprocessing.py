@@ -62,7 +62,10 @@ class Preprocessing:
         width = height = self.__config['img_size']
         return cv2.warpPerspective(img, self.__perspective_transform, (width, height))
 
-    def process(self, img):
+    def process(self, img: np.ndarray):
+        if(len(img.shape) is not 3):
+            pass
+
         img_color_warped = self._warp_perspective(img)
         img_gray_warped = cv2.cvtColor(img_color_warped, cv2.COLOR_RGB2GRAY)
         img_normalized = self._normalize(img_gray_warped)

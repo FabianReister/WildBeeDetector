@@ -15,7 +15,7 @@ class BeeDetector:
         self.__k = self.__create_correlation_kernel()
 
     def __create_correlation_kernel(self):
-        k_size = self._config['k_size']
+        k_size = tuple(self._config['k_size'])
 
         k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, k_size)
         k = k / np.mean(k.ravel())
