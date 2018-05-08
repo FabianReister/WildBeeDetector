@@ -10,9 +10,8 @@ class TestBeeDetectorMethods(unittest.TestCase):
         """
         Make sure that the default config is valid
         """
-        config_loader = wild_bee_watch.config_loader.ConfigLoader(
-            "./data/config.yaml")
-        config = config_loader.load()
+        config_loader = wild_bee_watch.config_loader.ConfigLoader()
+        config = config_loader.load("./data/config.yaml")
         self.assertIsNotNone(config)
 
         preprocessing = wild_bee_watch.preprocessing.Preprocessing(
