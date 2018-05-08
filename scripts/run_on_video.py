@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+
+"""
+
+
+
+"""
+
+
+def parse_command_line_args():
+    from argparse import ArgumentParser
+
+    import os
+    default_config = os.path.dirname(__file__) + "/../config/config.yaml"
+
+    parser = ArgumentParser()
+    parser.add_argument("input", help="Path to the input video.")
+    parser.add_argument(
+        "output", help="Path to the output video. Will be created.")
+    parser.add_argument("--config", default=default_config,
+                        help="Path to the YAML config file.")
+    parser.add_argument(
+        "--frame_count", help="If specified, only a subset of all frames will be processed.")
+    args = parser.parse_args()
+    return args
+
+
+def draw_rect(rect, img):
+    pt1 = (rect[0], rect[1])
+    pt2 = (rect[0] + rect[2], rect[1] + rect[3])
+
+    img = cv2.rectangle(img, pt1, pt2, (255, 0, 0), 2)
+
+    return img
+
+
+def process_video(args):
+    from wild_bee_watch import ConfigLoader, Preprocessing, BeeDetector
+    config_loader = ConfigLoader()
+    config = config_loader.load(args.config)
+
+    preprocessing = Preprocessing(config['preprocessing'])
+    detector = BeeDetector(config['bee_detector'], preprocessing)
+
+    import cv2
+    cv2.setNumThreads(2)
+
+    cap = cv2.VideoCapture(args.input)
+
+    if not cap.isOpened():
+        print("Could not open video %s" % args.input)
+        return
+
+    from tqdm import tqdm
+
+    if args.frame_count is not None:
+        sequence_length = args.frame_count
+    else:
+        sequence_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    ret, frame = cap.read()
+    detector.initialize(frame)
+    img_normalized, img_color = preprocessing.process(frame)
+
+    fps = float(cap.get(cv2.CAP_PROP_FPS))
+
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    output_video = cv2.VideoWriter(
+        args.output, fourcc, fps, img_normalized.shape)
+
+    for i in tqdm(range(sequence_length)):
+        if not cap.isOpened():
+            break
+
+        ret, frame = cap.read()
+
+        _, img_color = preprocessing.process(frame)
+
+        bboxes = detector.detect(frame)
+
+        for bbox in bboxes:
+            img_color = draw_rect(bbox)
+
+        output_video.write(img_color)
+
+
+if __name__ == '__main__':
+    args = parse_command_line_args()
+    process_video(args)
