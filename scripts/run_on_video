@@ -10,8 +10,11 @@
 def parse_command_line_args():
     from argparse import ArgumentParser
 
-    import os
-    default_config = os.path.dirname(__file__) + "/../config/config.yaml"
+    import pkg_resources
+    DATA_PATH = pkg_resources.resource_filename('wild_bee_watch', 'config/')
+    default_config = DATA_PATH + "/config.yaml"
+
+    print(default_config)
 
     parser = ArgumentParser()
     parser.add_argument("input", help="Path to the input video.")
@@ -26,10 +29,11 @@ def parse_command_line_args():
 
 
 def draw_rect(rect, img):
+    from cv2 import rectangle
     pt1 = (rect[0], rect[1])
     pt2 = (rect[0] + rect[2], rect[1] + rect[3])
 
-    img = cv2.rectangle(img, pt1, pt2, (255, 0, 0), 2)
+    img = rectangle(img, pt1, pt2, (255, 0, 0), 2)
 
     return img
 
@@ -79,7 +83,7 @@ def process_video(args):
         bboxes = detector.detect(frame)
 
         for bbox in bboxes:
-            img_color = draw_rect(bbox)
+            img_color = draw_rect(bbox, img_color)
 
         output_video.write(img_color)
 

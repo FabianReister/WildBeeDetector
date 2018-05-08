@@ -12,10 +12,13 @@ with open('LICENSE') as f:
     license = f.read()
 
 import unittest
+
+
 def test_suite():
     test_loader = unittest.TestLoader()
     test_suite = test_loader.discover('tests', pattern='test_*.py')
     return test_suite
+
 
 setup(
     name='wild_bee_watch',
@@ -28,8 +31,6 @@ setup(
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
     scripts=['scripts/run_on_video'],
-    data_files=[('config', ['config/config.yaml'])],
+    data_files=[('wild_bee_watch/config', ['config/config.yaml'])],
     test_suite='setup.test_suite'
 )
-
-
