@@ -11,5 +11,9 @@ preprocessing:
     - [510, 400] # lower right
 
   # kernel size for low pass filtering (normalization)
-  k_size:
-    - [11, 11]   # [pixels]
+  k_size: [11, 11]   # [pixels]
+
+bee_detector:
+
+  # kernel size for correlation kernel
+  k_size: [21,21]
