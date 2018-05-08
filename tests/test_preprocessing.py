@@ -48,7 +48,3 @@ class TestPreprocessingMethods(unittest.TestCase):
 
         preprocessed_image(img)
         preprocessed_image(img_black)
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -32,7 +32,3 @@ class TestBeeDetectorMethods(unittest.TestCase):
         bboxes = detector.detect(im_single_bee)
 
         self.assertEqual(1, len(bboxes))
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -16,7 +16,3 @@ class TestConfigMethods(unittest.TestCase):
         config = config_loader.load(os.path.dirname(
             __file__) + "/../config/config.yaml")
         self.assertIsNotNone(config)
-
-
-if __name__ == '__main__':
-    unittest.main()
