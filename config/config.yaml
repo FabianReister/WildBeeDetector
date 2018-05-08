@@ -8,4 +8,8 @@ preprocessing:
     - [190, 90]  # upper left
     - [180, 400] # lower left
     - [500, 90]  # upper right
-    - [510, 400] # lower right 
+    - [510, 400] # lower right
+
+  # kernel size for low pass filtering (normalization)
+  k_size:
+    - [11, 11]   # [pixels]
