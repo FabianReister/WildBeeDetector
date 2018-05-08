@@ -1,6 +1,7 @@
 import unittest
 import cv2
 import numpy as np
+import os
 
 from context import wild_bee_watch
 
@@ -12,7 +13,8 @@ class TestPreprocessingMethods(unittest.TestCase):
         Make sure that the default config is valid
         """
         config_loader = wild_bee_watch.config_loader.ConfigLoader()
-        config = config_loader.load()
+        config = config_loader.load(os.path.dirname(
+            __file__) + "/../config/config.yaml")
         self.assertIsNotNone(config)
 
         perprocessing = wild_bee_watch.preprocessing.Preprocessing(
@@ -20,13 +22,14 @@ class TestPreprocessingMethods(unittest.TestCase):
 
     def test_preprocessing(self):
         config_loader = wild_bee_watch.config_loader.ConfigLoader()
-        config = config_loader.load("./data/config.yaml")
+        config = config_loader.load(
+            os.path.dirname(__file__) + "/data/config.yaml")
         self.assertIsNotNone(config)
 
         preprocessing = wild_bee_watch.preprocessing.Preprocessing(
             config['preprocessing'])
 
-        img = cv2.imread('./data/background.jpg')
+        img = cv2.imread(os.path.dirname(__file__) + "/data/background.jpg")
         img_black = np.zeros_like(img)
 
         img_normalized, img_color = preprocessing.process(img)

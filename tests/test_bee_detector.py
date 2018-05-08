@@ -1,5 +1,6 @@
 import unittest
 import cv2
+import os
 
 from context import wild_bee_watch
 
@@ -10,8 +11,10 @@ class TestBeeDetectorMethods(unittest.TestCase):
         """
         Make sure that the default config is valid
         """
+
         config_loader = wild_bee_watch.config_loader.ConfigLoader()
-        config = config_loader.load("./data/config.yaml")
+        config = config_loader.load(
+            os.path.dirname(__file__) + "/data/config.yaml")
         self.assertIsNotNone(config)
 
         preprocessing = wild_bee_watch.preprocessing.Preprocessing(
@@ -19,8 +22,10 @@ class TestBeeDetectorMethods(unittest.TestCase):
         detector = wild_bee_watch.bee_detector.BeeDetector(
             config['bee_detector'], preprocessing)
 
-        im_background = cv2.imread("./data/background.jpg")
-        im_single_bee = cv2.imread("./data/single_bee.jpg")
+        im_background = cv2.imread(os.path.dirname(
+            __file__) + "/data/background.jpg")
+        im_single_bee = cv2.imread(os.path.dirname(
+            __file__) + "/data/single_bee.jpg")
 
         detector.initialize(im_background)
 
