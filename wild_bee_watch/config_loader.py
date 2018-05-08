@@ -14,3 +14,5 @@ class ConfigLoader:
                 return config
             except yaml.YAMLError as exc:
                 print(exc)
+
+        return None
