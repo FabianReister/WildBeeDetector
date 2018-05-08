@@ -1,0 +1,22 @@
+preprocessing:
+  # the size of the warped image
+  img_size: 320 # [pixels]
+
+  # corner points of the original image
+  # they will be used for perspective transformation
+  corner_points:
+    - [190, 90]  # upper left
+    - [180, 400] # lower left
+    - [500, 90]  # upper right
+    - [510, 400] # lower right
+
+  # kernel size for low pass filtering (normalization)
+  k_size: [11, 11]   # [pixels]
+
+bee_detector:
+
+  # kernel size for correlation kernel
+  k_size: [21,21]
+
+  # threshold for correlation filter
+  th_corr: 260

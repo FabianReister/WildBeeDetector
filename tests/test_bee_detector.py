@@ -6,11 +6,12 @@ from context import wild_bee_watch
 
 class TestBeeDetectorMethods(unittest.TestCase):
 
-    def test_default_config(self):
+    def test_bee_detector(self):
         """
         Make sure that the default config is valid
         """
-        config_loader = wild_bee_watch.config_loader.ConfigLoader()
+        config_loader = wild_bee_watch.config_loader.ConfigLoader(
+            "./data/config.yaml")
         config = config_loader.load()
         self.assertIsNotNone(config)
 
