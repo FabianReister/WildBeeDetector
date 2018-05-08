@@ -17,3 +17,6 @@ bee_detector:
 
   # kernel size for correlation kernel
   k_size: [21,21]
+
+  # threshold for correlation filter
+  th_corr: 260

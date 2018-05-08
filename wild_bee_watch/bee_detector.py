@@ -32,9 +32,19 @@ class BeeDetector:
     def detect(self, image):
         assert(self.__initialized)
 
-        activity = np.abs(image - self._bg)
+        img_normalized, _ = self._preprocessing.process(image)
+
+        activity = np.abs(img_normalized - self._bg)
 
         # correlation filter
+        th_corr = self._config['th_corr']
 
-        activity_corr = cv2.filter2D(activity, cv2.CV_32F, k)
-        act_bin = (act > 260).astype(np.uint8)
+        activity_corr = cv2.filter2D(activity, cv2.CV_32F, self.__k)
+        act_bin = (activity_corr > th_corr).astype(np.uint8)
+
+        # find bees in the binary activation image
+        _, contours, _ = cv2.findContours(
+            act_bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        bounding_rects = list(map(cv2.boundingRect, contours))
+
+        return bounding_rects

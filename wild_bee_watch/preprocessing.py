@@ -19,7 +19,7 @@ class Preprocessing:
         """
         img = img.astype(np.float32)
 
-        k_size = self.__config['kernel_size']
+        k_size = tuple(self.__config['k_size'])
 
         mean = cv2.GaussianBlur(img, k_size, 0)
         stddev = np.sqrt(cv2.GaussianBlur((img - mean)**2, k_size, 0))
@@ -58,12 +58,12 @@ class Preprocessing:
 
         return perspective_transform
 
-    def _warp_perspective(self, img):
+    def _warp_perspective(self, img: np.ndarray):
         width = height = self.__config['img_size']
         return cv2.warpPerspective(img, self.__perspective_transform, (width, height))
 
     def process(self, img: np.ndarray):
-        if(len(img.shape) is not 3):
+        if(img is not None or len(img.shape) is not 3):
             pass
 
         img_color_warped = self._warp_perspective(img)
