@@ -1,4 +1,4 @@
-# Wild Bee Watch
+# Wild Bee Detector
 
 ## Introduction
 
